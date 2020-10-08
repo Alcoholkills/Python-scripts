@@ -22,16 +22,20 @@ print(excelArray)
 
 print("--")
 for y in excelArray:
-    if y[2] == "Oui":
-        print(y[0])
-        #Enlever le print et faire la creation de l'objet YouTube
+    if y[2] != "Oui":
+        #print(y[0])
+        Youtube(y[0]).streams.get_audio_only().download()
+        #FAIT - Enlever le print et faire la creation de l'objet YouTube
+        y[2] = "Oui"
+        #Mettre ici le write-excel pour valider le doc
         
-        #Mettre la commande ffmpeg ici, en reprenant le titre de la video
-
 listFiles = os.listdir("/home/pierre/Documents/Coding/PythonScript/")
 print(listFiles)
 for x in listFiles:
     found = re.findall("[.].+",x)
     print(found)
-    if found == "mp4":
+    if found == ".mp4":
         #mettre la commande ffmpeg pour convertir en 'mp3' est l'envoyer ici : 'C:\Users\pierr\Music\iTunes\iTunes Media\Music\Unknown Artist\Unknown Album'
+        #cmd = ...
+        #Mettre la commande ffmpeg ici, pour rm le file mp4
+        #cmd = ...
