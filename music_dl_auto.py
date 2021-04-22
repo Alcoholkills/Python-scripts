@@ -1,41 +1,42 @@
+from tkinter import *
+from tkinter import filedialog
+from os import system, getcwd
+from convert_to_mp3 import cleanMusicFolder
 
-#use subprocess to initiate cmd commands
-#use pandas to import excel files
-#check 'https://towardsdatascience.com/automate-your-python-scripts-with-task-scheduler-661d0a40b279' to make it automatically
-#C:\Users\pierr\Documents\C'est le bureau\Youtube Downloader\George Orwell
-#C:\Users\pierr\Music\iTunes\iTunes Media\Music\Unknown Artist\Unknown Album
+root = Tk()
+root.geometry("500x200")
+root.title("YouTube Download")
 
-#it's gg ;)
+textArea = Entry(root, width=50)
+textArea.pack()
 
+def wrapper():
+    beginADownLoad(textArea.get())
 
-import pandas
-#import subprocess
-#import pytube
-import os
-import re
+def beginADownLoad(url):
+    try:
+        system(("pytube " + url + ' -a -t "C:\\Users\\pierr\\Music\\Music_DL"').replace("\n",""))
+        textArea.delete(0,last=END)
+    except FileNotFoundError:
+        pass
 
-excelFilePath = "/home/pierre/Documents/Coding/PythonScript/nameAndAge.ods"
-#excelArray = pandas.read_excel(excelFilePath, header=None, names=["Nom", "Ages", "Adultes ?"]).values
-#returns a dataframe
-excelArray = pandas.read_excel(excelFilePath).values
-print(excelArray)
+def selectAFile():
+    root.filename = filedialog.askopenfilename(initialdir=getcwd(),title="Select a file", filetypes=(("txt files","*.txt"),))
+    with open(root.filename, 'r') as f:
+        lines = f.readlines()
+        linesMax = len(lines)
+        i = 1
+        for x in lines:
+            beginADownLoad(x)
+            print(str(i) + "/" + str(linesMax))
+            i += 1
+    
+beginDL = Button(root, text="Validate", command=wrapper)
+searchTxtFile = Button(root, text="Select a file", command=selectAFile)
+cleanMusic = Button(root, text="ffmpeg convert", command=cleanMusicFolder)
 
-print("--")
-for y in excelArray:
-    if y[2] != "Oui":
-        #print(y[0])
-        Youtube(y[0]).streams.get_audio_only().download()
-        #FAIT - Enlever le print et faire la creation de l'objet YouTube
-        y[2] = "Oui"
-        #Mettre ici le write-excel pour valider le doc
-        
-listFiles = os.listdir("/home/pierre/Documents/Coding/PythonScript/")
-print(listFiles)
-for x in listFiles:
-    found = re.findall("[.].+",x)
-    print(found)
-    if found == ".mp4":
-        #mettre la commande ffmpeg pour convertir en 'mp3' est l'envoyer ici : 'C:\Users\pierr\Music\iTunes\iTunes Media\Music\Unknown Artist\Unknown Album'
-        #cmd = ...
-        #Mettre la commande ffmpeg ici, pour rm le file mp4
-        #cmd = ...
+beginDL.pack()
+searchTxtFile.pack()
+cleanMusic.pack()
+
+mainloop()
