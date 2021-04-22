@@ -1,0 +1,24 @@
+Pouvoir télécharger un audio depuis un url
+Pouvoir télécharger une playlist
+Pouvoir télécharger des audios depuis un fichier
+
+--> Ce soit mit dans un dossier musique
+
+
+TODO:
+	Inteface graphique avec un choix - le tout passe par CLI -- os.system
+	Avoir une fonction qui corrige les noms de fichiers
+	Depuis une URL :
+		Fonction qui télécharge l'audio
+	Depuis un fichier :
+		Avoir un fichier txt : une ligne un audio
+		Parcours du fichier ligne par ligne, execute "Depuis une URL" pour chaque ligne
+	Depuis une playlist :
+		Lire chaque item de la playlist avec le type pytube.Playlist
+		Execute "Depuis une URL" pour chaque item
+	Tous les fichiers sont téléchargés dans Music "C:\Users\pierr\Music\Music_DL"
+
+Hitman
+Thief
+The Concil
+Anime
